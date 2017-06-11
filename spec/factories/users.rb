@@ -5,9 +5,10 @@ FactoryGirl.define do
     avatar {Faker::Name.name}
     chatwork_id {Faker::Name.name}
     description {Faker::Hacker.say_something_smart}
-    email "user@gmail.com"
+    email {Faker::Internet.email}
     password "123456"
     status 1
+    authentication_token {Devise.friendly_token}
   end
   trait :admin do
     role {User.roles[:admin]}

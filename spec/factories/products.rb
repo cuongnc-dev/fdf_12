@@ -5,8 +5,8 @@ FactoryGirl.define do
     status 0
     name {Faker::Name.name}
     image {Faker::Name.name}
-    category nil
-    shop nil
-    user nil
+    category {FactoryGirl.create :category}
+    shop {FactoryGirl.create :shop}
+    user {FactoryGirl.create :user}
   end
 end
