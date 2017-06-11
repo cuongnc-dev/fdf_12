@@ -8,6 +8,7 @@ FactoryGirl.define do
     email "user@gmail.com"
     password "123456"
     status 1
+    authentication_token {Devise.friendly_token}
   end
   trait :admin do
     role {User.roles[:admin]}
