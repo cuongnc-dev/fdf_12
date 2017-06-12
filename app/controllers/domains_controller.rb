@@ -46,7 +46,8 @@ class DomainsController < ApplicationController
   end
 
   def update
-    if @domain.update_attributes status: params[:status]
+    if params[:status].present?
+      @domain.update_attributes status: params[:status]
       flash[:success] = t "save_domain_successfully"
     else
       flash[:danger] = t "save_domain_not_successfully"
