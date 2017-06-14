@@ -2,9 +2,16 @@
   <div class="product_content_area">
     <div class="image_product">
       <% if @domain.present? %>
-        <%= link_to domain_product_path(@domain, product) do %>
-          <%= image_tag product.image.url,
-            class: "image-shop height-27375 img_cover_size image_product_item" %>
+        <% if is_member_of_domain? current_user.id, @domain.id %>
+          <%= link_to domain_product_path(@domain, product) do %>
+            <%= image_tag product.image.url,
+              class: "image-shop height-27375 img_cover_size image_product_item" %>
+          <% end %>
+        <% else %>
+          <%= link_to "#join-domain-order-#{product.id}", "data-toggle": "modal" do %>
+            <%= image_tag product.image.url,
+              class: "image-shop height-27375 img_cover_size image_product_item" %>
+          <% end %>
         <% end %>
       <% else %>
         <%= link_to product_path(product, domain_id: "not_find") do %>
@@ -24,24 +31,47 @@
     <div class="description_area row">
       <div class="col-md-4 padding-left--10px">
         <% if @domain.present? %>
-          <%= link_to domain_product_path(@domain, product) do %>
-          <span class="shop-avatar">
-            <% if product.shop_avatar.nil? %>
-              <%= image_tag "default_shop_avatar", class: "image_shop_icon_product_item" %>
-            <% else %>
-              <%= image_tag product.shop_avatar.url,
-                class: "image_shop_icon_product_item present" %>
+          <% if is_member_of_domain? current_user.id, @domain.id %>
+            <%= link_to domain_product_path(@domain, product) do %>
+              <span class="shop-avatar">
+                <% if product.shop_avatar.nil? %>
+                  <%= image_tag "default_shop_avatar", class: "image_shop_icon_product_item" %>
+                <% else %>
+                  <%= image_tag product.shop_avatar.url,
+                    class: "image_shop_icon_product_item present" %>
+                <% end %>
+              </span>
             <% end %>
-          </span>
+            <div class="shop_nam_item_product">
+              <strong class="truncate-12em">
+                <%= link_to truncate(product.shop.name,
+                  length: Settings.max_shop_name),
+                  domain_shop_path(@domain, product.shop),
+                  class: "tooltips", title: product.shop.name %>
+              </strong>
+            </div>
+          <% else %>
+            <%= link_to "#user-need-join-domain-#{product.shop.id}",
+              "data-toggle": "modal" do %>
+              <span class="shop-avatar">
+                <% if product.shop_avatar.nil? %>
+                  <%= image_tag "default_shop_avatar", class: "image_shop_icon_product_item" %>
+                <% else %>
+                  <%= image_tag product.shop_avatar.url,
+                    class: "image_shop_icon_product_item present" %>
+                <% end %>
+              </span>
+            <% end %>
+            <div class="shop_nam_item_product">
+              <strong class="truncate-12em">
+                <%= link_to truncate(product.shop.name,
+                  length: Settings.max_shop_name),
+                  "#user-need-join-domain-#{product.shop.id}",
+                  class: "tooltips", title: product.shop.name,
+                  "data-toggle": "modal" %>
+              </strong>
+            </div>
           <% end %>
-          <div class="shop_nam_item_product">
-            <strong class="truncate-12em">
-              <%= link_to truncate(product.shop.name,
-                length: Settings.max_shop_name),
-                domain_shop_path(@domain, product.shop),
-                class: "tooltips", title: product.shop.name %>
-            </strong>
-          </div>
         <% end %>
       </div>
       <% if @domain.present? %>
@@ -70,12 +100,45 @@
             <%= t "cart.add_to_card" %>
           <% end %>
         <% else %>
-          <%= link_to cart_path(product.id), remote: true,
-            method: :put, class: "btn btn_add_to_cart btn-add padding-left-for-button" do %>
-            <span class="glyphicon glyphicon-shopping-cart"></span>
-            <%= t "cart.add_to_card" %>
+          <% if is_member_of_domain? current_user.id, @domain.id %>
+            <%= link_to cart_path(product.id), remote: true,
+              method: :put, class: "btn btn_add_to_cart btn-add padding-left-for-button" do %>
+              <span class="glyphicon glyphicon-shopping-cart"></span>
+              <%= t "cart.add_to_card" %>
+            <% end %>
+          <% else %>
+            <%= link_to "#join-domain-order-#{product.id}", class: "btn btn_add_to_cart btn-add
+              padding-left-for-button", "data-toggle": "modal" do %>
+              <span class="glyphicon glyphicon-shopping-cart"></span>
+              <%= t "cart.add_to_card" %>
+            <% end %>
           <% end %>
         <% end %>
+        <div id="join-domain-order-<%= product.id %>" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                  &times;
+                </button>
+                <h4 class="modal-title modal_text_header"><%= t "common.notifications" %></h4>
+              </div>
+              <div class="modal-body confirm-body">
+                <h4><%= t "user_need_join_domain_product",
+                  domain_name: @domain.name, product_name: product.name %>
+                </h4>
+                <h4><%= t "click_to_join_domain" %></h4>
+              </div>
+              <div class="modal-footer">
+                <%= link_to t("common.btn_ok"), user_domains_path(user_id: current_user.id,
+                  domain_id: @domain.id, join_domain: true), method: :post,
+                  class: "btn btn-success" %>
+                <%= link_to t("cancel"), "#", "data-dismiss": "modal",
+                  class: "btn btn-default" %>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     <% else %>
       <div class="interaction_area">

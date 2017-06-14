@@ -888,3 +888,5 @@ en:
   missing_delete_domain: "Only delete the domain when it has no members and no shops"
   delete_domain_success: "Delete domain success"
   delete_domain_fail : "Detete domain failed"
+  user_need_join_domain_shop: "You need to join %{domain_name} domain before view %{shop_name}'s shop infomation."
+  click_to_join_domain: "Click \"OK\" to join this domain"

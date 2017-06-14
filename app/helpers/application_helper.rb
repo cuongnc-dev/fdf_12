@@ -187,4 +187,9 @@ module ApplicationHelper
       checked_email_setting?(Settings.index_one_in_array) &&
       checked_email_setting?(Settings.index_two_in_array)) ? "checked" : ""
   end
+
+  def is_member_of_domain? user_id, domain_id
+    member_domain = UserDomain.find_by domain_id: domain_id, user_id: user_id
+    member_domain.present?
+  end
 end

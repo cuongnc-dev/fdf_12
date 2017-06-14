@@ -22,14 +22,20 @@
     <div class="shop-name-small">
       <h3 class="margin_top_5px">
         <% if @domain.present? %>
-          <% if is_owner_manager_of_shop? shop.id %>
-            <%= link_to truncate(shop.name, length: Settings.max_shop_name),
-              "#modal-confirm-#{shop.id}", "data-toggle": "modal",
-              class: "tooltips confirm-button", title: shop.name, "data-id": shop.id %>
+          <% if is_member_of_domain? current_user.id, @domain.id %>
+            <% if is_owner_manager_of_shop? shop.id %>
+              <%= link_to truncate(shop.name, length: Settings.max_shop_name),
+                "#modal-confirm-#{shop.id}", "data-toggle": "modal",
+                class: "tooltips confirm-button", title: shop.name, "data-id": shop.id %>
+            <% else %>
+              <%= link_to truncate(shop.name, length: Settings.max_shop_name),
+                domain_shop_path(@domain, shop),
+                class: "tooltips", title: shop.name %>
+            <% end %>
           <% else %>
             <%= link_to truncate(shop.name, length: Settings.max_shop_name),
-              domain_shop_path(@domain, shop),
-              class: "tooltips", title: shop.name %>
+              "#user-need-join-domain-#{shop.id}", "data-toggle": "modal",
+              class: "tooltips confirm-button", title: shop.name %>
           <% end %>
           <div><%= render "shared/shop_on_off", shop: shop %></div>
         <% else %>
@@ -54,6 +60,31 @@
                 class: "btn btn-default confirm-no-#{shop.id}" %>
               <%= link_to t("confirm_yes"), domain_dashboard_shop_path(@domain, shop),
                 class: "btn btn-add confirm-yes" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="user-need-join-domain-<%= shop.id %>" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header modal_header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                &times;
+              </button>
+              <h4 class="modal-title modal_text_header"><%= t "common.notifications" %></h4>
+            </div>
+            <div class="modal-body confirm-body">
+              <h4><%= t "user_need_join_domain_shop",
+                domain_name: @domain.name, shop_name: shop.name %>
+              </h4>
+              <h4><%= t "click_to_join_domain" %></h4>
+            </div>
+            <div class="modal-footer">
+              <%= link_to t("common.btn_ok"), user_domains_path(user_id: current_user.id,
+                domain_id: @domain.id, join_domain: true), method: :post,
+                class: "btn btn-success" %>
+              <%= link_to t("cancel"), "#", "data-dismiss": "modal",
+                class: "btn btn-default" %>
             </div>
           </div>
         </div>

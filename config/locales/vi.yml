@@ -945,3 +945,6 @@ vi:
   missing_delete_domain: "Chỉ có thể xóa miền khi nó không có thành viên và cửa hàng nào"
   delete_domain_success: "Xóa miền thành công"
   delete_domain_fail : "Xóa miền thất bại"
+  user_need_join_domain_shop: "Bạn cần phải tham gia vào miền %{domain_name} trước khi xem thông tin cửa hàng %{shop_name}."
+  user_need_join_domain_product: "Bạn cần phải tham gia vào miền %{domain_name} trước khi xem và đặt hàng món %{product_name}."
+  click_to_join_domain: "Nhấn \"Đồng ý\" để tham gia vào miền này"

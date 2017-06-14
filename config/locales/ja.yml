@@ -896,3 +896,6 @@ ja:
   missing_delete_domain: "削除することはできません。"
   delete_domain_success: "成功"
   delete_domain_fail : "故障"
+  user_need_join_domain_shop: "ンフォメーションストア%{shop_name}みて前に、%{domain_name}ドメインに参加する必要があります"
+  user_need_join_domain_product: "%{product_name}ご注文前に%{domain_name}ドメインに参加する必要があります"
+  click_to_join_domain: "このドメインに入るために \"OK\" をクリックします"
