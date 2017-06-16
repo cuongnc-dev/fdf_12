@@ -898,3 +898,5 @@ en:
   all_domains: "All domains"
   filter_order: "Filter Orders"
   select_domain: "Select domain: "
+  food_name: "Food's name"
+  opening_hours: "Opening hours"

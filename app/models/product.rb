@@ -41,6 +41,7 @@ class Product < ApplicationRecord
   delegate :name, to: :shop, prefix: :shop, allow_nil: true
   delegate :avatar, to: :shop, prefix: :shop
   delegate :slug, to: :shop, prefix: true
+  delegate :name, to: :category, prefix: true
 
   scope :by_date_newest, ->{order created_at: :desc}
   scope :by_active, ->{where status: :active}

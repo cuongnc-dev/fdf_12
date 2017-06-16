@@ -906,3 +906,5 @@ ja:
   all_domains: "All domains"
   filter_order: "Filter Orders"
   select_domain: "Select domain: "
+  food_name: "食べ物の名前"
+  opening_hours: "営業時間"

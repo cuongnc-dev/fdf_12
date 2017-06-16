@@ -955,3 +955,5 @@ vi:
   all_domains: "Tất cả miền"
   filter_order: "Lọc đơn hàng"
   select_domain: "Chọn miền: "
+  food_name: "Tên món ăn"
+  opening_hours: "Giờ mở bán"
