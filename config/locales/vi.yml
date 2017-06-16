@@ -952,3 +952,6 @@ vi:
   user_need_join_domain_shop: "Bạn cần phải tham gia vào miền %{domain_name} trước khi xem thông tin cửa hàng %{shop_name}."
   user_need_join_domain_product: "Bạn cần phải tham gia vào miền %{domain_name} trước khi xem và đặt hàng món %{product_name}."
   click_to_join_domain: "Nhấn \"Đồng ý\" để tham gia vào miền này"
+  all_domains: "Tất cả miền"
+  filter_order: "Lọc đơn hàng"
+  select_domain: "Chọn miền: "

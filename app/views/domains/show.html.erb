@@ -1,148 +1,118 @@
-<% if params[:id][Settings.min_string..Settings.max_string] == Settings.user_domain_name %>
-  <div class="block-item-list block">
-    <h3 class="title">
-      <span><%= t "public_domain" %>(<%= @domains.size %>)</span>
-    </h3>
-    <div class="clearfix body">
-      <div class="category-list padding-top-0">
-        <% if @domains.present? %>
+<div class="col-sm-12">
+  <div class="col-md-3 col-sm-12 col-xs-12">
+    <div class="block-item-list block padding-0 col-md-12 col-sm-6 col-xs-18">
+      <h3 class="title padding-left-10 margin-left_domain form-header">
+        <span class="text-header"><%= t "common.categories" %></span>
+      </h3>
+      <div class="clearfix body  margin-left_domain">
+        <div class="category-list padding-top-0">
           <div class="<%= "scroll" if @domains.size > Settings.max_content_scroll %>">
-            <% @domains.each do |domain| %>
-              <%= link_to domain_path(domain),
-                class: "btn btn-default col-lg-6 col-md-12 active" do %>
-                <span class="user-title" title="<%= domain.name %>">
-                  <%= truncate(domain.name,
-                    length: Settings.max_domain_name) %>
+            <%= link_to products_path(domain_id: @domain.id),
+              class: "col-lg-6 col-md-12 col-xs-12 padding-bottom-2 categorie" do %>
+              <span><%= t "common.category.all" %></span>
+            <% end %>
+            <% @categories.each do |category| %>
+              <% if number_product_in_category_by_domain(category, @domain) >
+                Settings.min_product_in_category %>
+                <%= link_to category_path(category, domain_id: @domain.id),
+                  class: "col-lg-6 col-md-12 col-xs-12 categorie" do %>
+                  <span><%= category.name %></span>
+                  <span class="categorie-count">
+                  <%= number_product_in_category_by_domain category, @domain %>
                 </span>
+                <% end %>
               <% end %>
             <% end %>
           </div>
-        <% end %>
+        </div>
       </div>
     </div>
-  </div>
-  <%= image_tag "food_banner1.jpg", alt: "food banner",
-    class: "defaut-pic-cover food_banner_size img_cover_size" %>
-  <div>
-    <br/>
-    <h3 class="title"><%= t "manual_help_forder" %></h3>
-    <br/>
-    <%= render "domains/domain_intro_page" %>
-  </div>
-<% else %>
-  <div class="col-sm-12 top_home">
-    <div class="col-sm-3">
-      <div class="block-item-list block padding-0">
-        <h3 class="title padding-left-10  margin-left_domain">
-          <span><%= t "common.categories" %></span>
-        </h3>
-        <div class="clearfix body  margin-left_domain">
-          <div class="category-list padding-top-0">
+    <div class="block-item-list block padding-0 col-md-12 col-sm-6 col-xs-18">
+      <h3 class="title padding-left-10 margin-left_domain form-header">
+        <span class="text-header"><%= t "public_domain" %>(<%= @domains.size %>)</span>
+      </h3>
+      <div class="clearfix body">
+        <div class="category-list padding_0">
+          <% if @domains.present? %>
             <div class="<%= "scroll" if @domains.size > Settings.max_content_scroll %>">
-              <%= link_to products_path(domain_id: @domain.id),
-                class: "btn btn-default col-lg-6 col-md-12 active" do %>
-                <span><%= t "common.category.all" %></span>
-              <% end %>
-              <% @categories.each do |category| %>
-                <% if number_product_in_category_by_domain(category, @domain) >
-                  Settings.min_product_in_category %>
-                  <%= link_to category_path(category, domain_id: @domain.id),
-                    class: "btn btn-default col-lg-6 col-md-12 active" do %>
-                    <span><%= category.name %></span>
-                    <span class="badge">
-                    <%= number_product_in_category_by_domain category, @domain %>
-                  </span>
-                  <% end %>
+              <% @domains.each do |domain| %>
+                <%= link_to domain_path(domain),
+                  class: "col-lg-6 col-md-12 col-xs-12 padding-bottom-2 categorie" do %>
+                  <span title="<%= domain.name %>"><%= truncate(domain.name,
+                    length: Settings.max_len) %></span>
+                    <span class="glyphicon glyphicon-globe icon-public-header">
+                    </span>
                 <% end %>
               <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="block-item-list block">
-        <h3 class="title  margin-left_domain">
-          <span><%= t "public_domain" %>(<%= @domains.size %>)</span>
-        </h3>
-        <div class="clearfix body">
-          <div class="category-list padding_0">
-            <% if @domains.present? %>
-              <div class="<%= "scroll" if @domains.size > Settings.max_content_scroll %>">
-                <% @domains.each do |domain| %>
-                  <%= link_to domain_path(domain),
-                    class: "btn btn-default col-md-6 col-md-12 active margin-btnl" do %>
-                    <span title="<%= domain.name %>"><%= truncate(domain.name, length: Settings.max_len) %></span>
-                  <% end %>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Begin carousel -->
-    <div class="col-sm-9">
-      <div id="id_top_products" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-          <% @shops_slide.each_with_index do |shop, index| %>
-            <div class="<%= index == 0 ? 'item active' : 'item' %>">
-              <%= image_tag shop.cover_image.url, alt: shop.name,
-                class: "defaut-pic-cover" %>
-              <div class="carousel-caption slide_bottom">
-                <h3><%= shop.name %></h3>
-                <p><%= shop.description %></p>
-              </div>
             </div>
           <% end %>
         </div>
-        <a class="left carousel-control" href="#id_top_products" role="button"
-        data-slide="prev">
-          <span class="fa fa-angle-left" aria-hidden="true"></span>
-          <span class="sr-only"><%= t "common.previous" %></span>
-        </a>
-        <a class="right carousel-control" href="#id_top_products" role="button"
-        data-slide="next">
-          <span class="fa fa-angle-right left-55" aria-hidden="true"></span>
-          <span class="sr-only"><%= t "common.next" %></span>
-        </a>
       </div>
-    </div>
-    <!-- End carousel -->
-    </div>
-    <div class="row">
-      <div class="col-md-12 row-title">
-        <h2 class="section_title  margin-left_domain padding-left_domain">
-          <%= t "common.top_shops" %>
-        </h2>
-      </div>
-      <hr>
-      <div class="col-md-12 padding_0" id="id_shops_list">
-        <%= render @shops %>
-      </div>
-      <% if current_user.is_member_of_domain? @domain %>
-        <div class="btn_view_all_wrapper pull-center">
-          <%= link_to t("common.btn_view_all"), domain_shops_path(@domain),
-            class: "btn btn_view_all btn-warning top_shop" %>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12 row-title">
-        <h2 class="section_title margin-left_domain padding-left_domain">
-          <%= t "common.top_products" %>
-        </h2>
-      </div>
-      <hr>
-      <div class="col-md-12 magin_top_10px">
-        <%= render @products_shop.flatten.slice(0, 12) %>
-      </div>
-      <% if current_user.is_member_of_domain? @domain %>
-        <div class="btn_view_all_wrapper pull-center">
-          <%= link_to t("common.btn_view_all"), domain_products_path(@domain),
-            class: "btn btn_view_all btn-warning top_shop" %>
-        </div>
-      <% end %>
     </div>
   </div>
-<% end %>
+  <!-- Begin carousel -->
+  <div class="col-sm-12 col-md-9">
+    <div id="id_top_products" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner" role="listbox">
+        <% @shops_slide.each_with_index do |shop, index| %>
+          <div class="<%= index == 0 ? 'item active' : 'item' %>">
+            <%= image_tag shop.cover_image.url, alt: shop.name,
+              class: "defaut-pic-cover" %>
+            <div class="carousel-caption slide_bottom">
+              <h3><%= shop.name %></h3>
+              <p><%= shop.description %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <a class="left carousel-control" href="#id_top_products" role="button"
+        data-slide="prev">
+        <span class="fa fa-angle-left" aria-hidden="true"></span>
+        <span class="sr-only"><%= t "common.previous" %></span>
+      </a>
+      <a class="right carousel-control" href="#id_top_products" role="button"
+        data-slide="next">
+        <span class="fa fa-angle-right left-55" aria-hidden="true"></span>
+        <span class="sr-only"><%= t "common.next" %></span>
+      </a>
+    </div>
+  </div>
+  <!-- End carousel -->
+  </div>
+  <div class="row">
+    <div class="col-md-12 row-title">
+      <h2 class="section_title  margin-left_domain padding-left_domain">
+        <%= t "common.top_shops" %>
+      </h2>
+    </div>
+    <hr>
+    <div class="col-md-12 padding_0" id="id_shops_list">
+      <%= render @shops %>
+    </div>
+    <% if current_user.is_member_of_domain? @domain %>
+      <div class="btn_view_all_wrapper pull-center">
+        <%= link_to t("common.btn_view_all"), domain_shops_path(@domain),
+          class: "btn btn_view_all btn-warning top_shop" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 row-title">
+      <h2 class="section_title margin-left_domain padding-left_domain">
+        <%= t "common.top_products" %>
+      </h2>
+    </div>
+    <hr>
+    <div class="col-md-12 magin_top_10px">
+      <%= render @products_shop.flatten.slice(0, 12) %>
+    </div>
+    <% if current_user.is_member_of_domain? @domain %>
+      <div class="btn_view_all_wrapper pull-center">
+        <%= link_to t("common.btn_view_all"), domain_products_path(@domain),
+          class: "btn btn_view_all btn-warning top_shop" %>
+      </div>
+    <% end %>
+  </div>
+</div>
 <%= render "modal_order_fast" %>

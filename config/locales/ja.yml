@@ -903,3 +903,6 @@ ja:
   user_need_join_domain_shop: "ンフォメーションストア%{shop_name}みて前に、%{domain_name}ドメインに参加する必要があります"
   user_need_join_domain_product: "%{product_name}ご注文前に%{domain_name}ドメインに参加する必要があります"
   click_to_join_domain: "このドメインに入るために \"OK\" をクリックします"
+  all_domains: "All domains"
+  filter_order: "Filter Orders"
+  select_domain: "Select domain: "

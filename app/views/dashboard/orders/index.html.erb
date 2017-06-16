@@ -1,7 +1,7 @@
 <div class="packing_view">
   <h2 class="text-center"><%= t "dashboard.order.title" %></h2>
   <div class="row pt15">
-    <div class="col-md-8 border_order_list col-md-8-resize">
+    <div class="col-md-8 col-sm-8 col-xs-8 border_order_list col-md-8-resize">
       <div class="title modal-header header_title_order">
         <span class="order_header_text">
           <%= t "order_statistics.step1"%>
@@ -19,91 +19,87 @@
           </div>
         </span>
       </div>
-      <div class="title modal-header header_title_order filter_header">
-        <% checking = checking_radio_button params[:type] %>
-        <div class="radio_button_filter">
-          <%= link_to dashboard_shop_orders_path,
-            class: "radio-inline" do %>
-            <input type="radio" name="filter_order"
-              <%= checking[Settings.filter_order.all] %>>
-            <%= t "all_status.all" %>
-          <% end %>
-          <%= link_to dashboard_shop_orders_path(type:
-            Settings.filter_status_order.pending), class: "radio-inline" do %>
-            <input type="radio" name="filter_order"
-              <%= checking[Settings.filter_order.pending] %>>
-            <%= t "all_status.pending" %>
-          <% end %>
-          <%= link_to dashboard_shop_orders_path(type:
-            Settings.filter_status_order.accepted), class: "radio-inline" do %>
-            <input type="radio" name="filter_order"
-              <%= checking[Settings.filter_order.accepted] %>>
-            <%= t "all_status.approved" %>
-          <% end %>
-          <%= link_to dashboard_shop_orders_path(type:
-            Settings.filter_status_order.rejected), class: "radio-inline" do %>
-            <input type="radio" name="filter_order"
-              <%= checking[Settings.filter_order.rejected] %>>
-            <%= t "all_status.rejected" %>
+      <div class="filter-order-box">
+        <div class="filter-order-title"><%= t "filter_order" %></div>
+        <div class="filter-order-by-domain text-center">
+          <div>
+            <%= t "select_domain" %>
+            <%= select_tag "filter-order-manager",
+              options_for_select(shop_domain_select @shop),
+              include_blank: t("all_domains"),
+              class: "filter-order-manager form-control inline" %>
+          </div>
+        </div>
+        <div class="text-center">
+          <% Settings.filter_status_order.each do |key, value| %>
+            <%= label_tag "status_#{value}", class: "radio-inline" do %>
+              <%= radio_button_tag :status, value, nil,
+                class: "manage-order-status" %>
+              <%= t "all_status.#{value}" %>
+            <% end %>
           <% end %>
         </div>
       </div>
       <div class="body-1">
-      <input type="hidden" value = "<%= @shop.id %>" id="shop-id"
-        data-rej="<%= t "all_status.rejected" %>"
-        data-acc="<%= t "all_status.accepted" %>">
-        <%= render @orders %>
+        <input type="hidden" value = "<%= @shop.id %>" id="shop-id"
+          data-rej="<%= t "all_status.rejected" %>"
+          data-acc="<%= t "all_status.accepted" %>">
+          <div id="dashboard-list-order"><%= render @orders %></div>
       </div>
     </div>
-    <div class="col-md-4 border_order_list">
-      <div class="title modal-header header_title_order">
-        <span class="order_header_text">
-          <%= t "order_statistics.step2"%>
-          <div class="title_button">
-            <span class="glyphicon glyphicon-gift btn_done"></span>
-            <%= link_to t("view_order_new.packing_order"),
-              dashboard_shop_order_products_path,
-              class: "btn_done single-action", value: "rejected" %>
-          </div>
-        </span>
+    <div class="col-md-4 col-sm-4 col-xs-4">
+      <div class="border_order_list">
+        <div class="title modal-header header_title_order">
+          <span class="order_header_text">
+            <%= t "order_statistics.step2"%>
+            <div class="title_button">
+              <span class="glyphicon glyphicon-gift btn_done"></span>
+              <%= link_to t("view_order_new.packing_order"),
+                dashboard_shop_order_products_path,
+                class: "btn_done single-action", value: "rejected" %>
+            </div>
+          </span>
+        </div>
+        <div class="body-2">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th><%= t "oder.name" %></th>
+                <th class="center"><%= t "oder.quantity" %></th>
+                <th class="right"><%= t "oder.price" %></th>
+              </tr>
+            </thead>
+            <tbody id="list_packing">
+              <%= render partial: "dashboard/orders/product_packing_item",
+                collection: @list_products_packing, as: :item %>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="body-2">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th><%= t "oder.name" %></th>
-              <th class="center"><%= t "oder.quantity" %></th>
-              <th class="right"><%= t "oder.price" %></th>
-            </tr>
-          </thead>
-          <tbody id="list_packing">
-            <%= render partial: 'dashboard/orders/product_packing_item',
-              collection: @list_products_packing, as: :item %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="col-md-4 border_order_list">
-      <div class="body-3">
-        <table class="info_total_packing">
-          <tbody>
-            <tr>
-              <td><%= label_tag "", t("view_order_new.total_items") %>:</td>
-              <td><%= label_tag "", total_items(@list_products_packing),
-                class: "info_packing  info_total_packing_product" %></td>
-            </tr>
-            <tr>
-              <td><%= label_tag "", t("view_order_new.total_categorie") %>:</td>
-              <td><%= label_tag "", @list_products_packing.size,
-                class: "info_packing info_total_packing_categorie" %></td>
-            </tr>
-            <tr>
-              <td><%= label_tag "", t("view_order_new.total_money") %>:</td>
-              <td><%= label_tag "", total_money(@list_products_packing),
-                class: "info_packing info_total_packing_money" %><%= t "cart.vnd"%></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="border_order_list">
+        <div class="body-3">
+          <table class="info_total_packing">
+            <tbody>
+              <tr>
+                <td><%= label_tag "", t("view_order_new.total_items") %>:</td>
+                <td><%= label_tag "", total_items(@list_products_packing),
+                  class: "info_packing  info_total_packing_product" %></td>
+              </tr>
+              <tr>
+                <td><%= label_tag "", t("view_order_new.total_categorie") %>:</td>
+                <td><%= label_tag "", @list_products_packing.size,
+                  class: "info_packing info_total_packing_categorie" %></td>
+              </tr>
+              <tr>
+                <td><%= label_tag "", t("view_order_new.total_money") %>:</td>
+                <td><%= label_tag "", total_money(@list_products_packing),
+                  class: "info_packing info_total_packing_money" %>
+                  <%= t "cart.vnd"%>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

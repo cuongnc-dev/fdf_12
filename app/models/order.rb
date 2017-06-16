@@ -26,7 +26,7 @@ class Order < ApplicationRecord
   scope :unfinished, ->{where.not status: Order.statuses[:done]}
   scope :on_today, ->{where "date(orders.created_at) = date(now())"}
   scope :is_rejected, -> {where.not status: Order.statuses[:rejected]}
-  scope :by_domain, -> domain_id {where domain_id: domain_id}
+  scope :by_domain, -> domain_id {where domain_id: domain_id if domain_id.present?}
 
   ransacker :created_at do
     Arel.sql("date(created_at)")

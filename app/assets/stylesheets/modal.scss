@@ -302,7 +302,7 @@ $orange_main: #ff5722;
   border-radius: 10px;
   .body-1 {
     width: 102%;
-    height: 520px;
+    height: 475px;
     overflow: scroll;
   }
   .body-2 {
@@ -363,24 +363,31 @@ $orange_main: #ff5722;
 .width-250px {
   width: 280px;
 }
+
 .width-150px {
   width: 100px;
 }
+
 .btn_accepted {
   color: #f39c12;
 }
+
 .btn_rejected {
   color: #dd4b39;
 }
+
 .btn_pending {
   color: #00c0ef;
 }
+
 .display-inline{
   display: inline;
 }
+
 .font_bold {
   font-weight: bold;
 }
+
 .btn_done {
   color: green;
 }
@@ -398,13 +405,11 @@ $orange_main: #ff5722;
 }
 
 .col-md-8-resize {
-  width: 66%;
-  margin-right: 7px;
   height: 560px;
 }
 
 .info_total_packing {
-  font-size: 18px;
+  margin-left: 10px;
   font-weight: bold;
   margin-top: 5px;
 }
@@ -412,12 +417,15 @@ $orange_main: #ff5722;
 .right {
   font-weight: bold;
 }
+
 .info_packing {
   padding-left: 5px;
 }
+
 .packing_view {
   margin-top: -12px;
 }
+
 .pt15 {
   padding-top: 15px;
 }
@@ -430,9 +438,11 @@ $orange_main: #ff5722;
   -moz-user-select: none;
   -ms-user-select: none;
 }
+
 .onoffswitch-checkbox {
   display: none;
 }
+
 .onoffswitch-label {
   display: block;
   overflow: hidden;
@@ -440,12 +450,14 @@ $orange_main: #ff5722;
   border: 1px solid #999999;
   border-radius: 20px;
 }
+
 .onoffswitch-inner {
   display: block;
   width: 200%;
   margin-left: -100%;
   transition: margin 0.3s ease-in 0s;
 }
+
 .onoffswitch-inner:before, .onoffswitch-inner:after {
   display: block;
   float: left;
@@ -459,6 +471,7 @@ $orange_main: #ff5722;
   font-weight: bold;
   box-sizing: border-box;
 }
+
 .onoffswitch-inner:before {
   content: "ON";
   padding-left: 5px;
@@ -466,6 +479,7 @@ $orange_main: #ff5722;
   color: #FFFFFF;
   text-align: left;
 }
+
 .onoffswitch-inner:after {
   content: "OFF";
   padding-right: 5px;
@@ -473,6 +487,7 @@ $orange_main: #ff5722;
   color: #FFFFFF;
   text-align: right;
 }
+
 .onoffswitch-switch {
   display: block;
   width: 16px;
@@ -486,37 +501,46 @@ $orange_main: #ff5722;
   border-radius: 20px;
   transition: all 0.3s ease-in 0s;
 }
+
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
   margin-left: 0;
 }
+
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
   right: 0px;
 }
+
 .set_inline {
   display: inline-block;
   float: right;
 }
+
 .h500 {
   height: 500px;
 }
+
 .btn_filter {
   float: right;
   margin-left: 5px;
 }
+
 .glyphicon {
   padding-top: 2px;
 }
+
 .filter_header {
   margin-top: 2px;
   width: 70%;
   margin-left: 15%;
   background: image-url(header_bg) #f4f4f4;
 }
+
 .radio_button_filter {
   margin-top: -12px;
   text-align: center;
   font-weight: bold;
 }
+
 .radio-inline {
   color: black;
 }
@@ -524,8 +548,89 @@ $orange_main: #ff5722;
   margin-top: 10px;
   color: #ff5722;
 }
+
 .btn_domian {
   display: inline;
   padding-top: 4px;
   padding-bottom: 4px;
+}
+
+//REFACTOR PROJECT
+.custom-container {
+  width: 100%;
+  margin: auto;
+}
+
+.scroll {
+  height: 105px;
+}
+
+@media (max-width: 1200px) {
+  .home-body {
+    padding-top: 100px;
+  }
+}
+
+@media (min-width: 1366px) {
+  .navbar-nav{
+    float: right;
+    margin-right: 9%;
+  }
+}
+
+.categorie {
+  border: groove 1px #white;
+  color: white;
+  border-radius: 5px;
+  font-size: 15px;
+  width: 45%;
+  margin-right: 4%;
+  margin-left: 1%;
+  margin-bottom: 4px;
+  padding-right: 0px;
+  background: #60a73c;
+  box-shadow: 1px 1px 1px rgba(68, 13, 13, 0.54);
+}
+
+.categorie:hover {
+  background: image-url(header_bg) white;
+  color: #fd6332
+}
+
+.categorie:hover .categorie-count {
+  background: image-url(header_bg) #fd6332;
+  color: white;
+}
+
+.categorie-count {
+  display: inline-block;
+  border: groove 1px #f38429;
+  border-radius: 100px;
+  width: 25px;
+  text-align: center;
+  float: right;
+  margin-right: -12px;
+  background: white;
+  color: #fd6332;
+}
+
+.padding-bottom-2 {
+  padding-bottom: 2px;
+}
+
+.form-header {
+  background: image-url(header_bg) #fd6332;
+  .text-header {
+    vertical-align: middle;
+    color: white !important;
+  }
+}
+
+.icon-public-header {
+  display: inline-block;
+  width: 25px;
+  text-align: center;
+  float: right;
+  margin-right: 0px;
+  color: white;
 }

@@ -895,3 +895,6 @@ en:
   user_need_join_domain_shop: "You need to join %{domain_name} domain before view %{shop_name}'s shop infomation."
   user_need_join_domain_product: "You need to join %{domain_name} domain before view and order %{product_name}."
   click_to_join_domain: "Click \"OK\" to join this domain"
+  all_domains: "All domains"
+  filter_order: "Filter Orders"
+  select_domain: "Select domain: "

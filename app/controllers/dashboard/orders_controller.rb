@@ -4,14 +4,13 @@ class Dashboard::OrdersController < BaseDashboardController
   before_action :check_owner_or_manager, only: [:index, :show]
 
   def index
-    orders = Order.orders_of_shop_pending params[:shop_id]
-    if orders.present?
-      load_order_product orders, params[:type]
-      load_list_toal_orders
-    else
-      flash[:danger] = t "oder.not_oder"
-      redirect_to domain_dashboard_shop_path(domain_id: session[:domain_id],
-        id: @shop.slug)
+    orders = Order.by_domain(params[:domain_id]).orders_of_shop_pending params[:shop_id]
+    load_order_product orders, params[:type]
+    load_list_toal_orders
+    if request.xhr?
+      respond_to do |format|
+        format.js
+      end
     end
   end
 
@@ -109,6 +108,8 @@ class Dashboard::OrdersController < BaseDashboardController
         check_item o.order_products.select{|op| op.accepted?}, o
       when Settings.filter_status_order.rejected
         check_item o.order_products.select{|op| op.rejected?}, o
+      when Settings.filter_status_order.done
+        check_item o.order_products.select{|op| op.done?}, o
       else
         @order_products[o.id] = o.order_products
         @orders << o

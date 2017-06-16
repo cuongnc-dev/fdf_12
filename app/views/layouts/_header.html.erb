@@ -1,6 +1,6 @@
 <div class="home-header">
   <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container media-margin-header-bar">
+    <div class="media-margin-header-bar">
       <div class="navbar-header">
         <% if @domain.present? %>
           <%= link_to domain_path(@domain), class: "navbar-brand" do %>
@@ -37,7 +37,7 @@
             <i class="fa fa-search"></i>
           <% end %>
         <% end %>
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav nav-header">
           <% if user_signed_in? && current_user.domains.present? %>
             <li class="dropdown">
               <a href="#" data-toggle="dropdown"
