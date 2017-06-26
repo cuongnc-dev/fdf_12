@@ -57,7 +57,7 @@
             </div>
           <% end %>
           <div class="btn_function">
-            <%= link_to "#modal_edit_shop_#{shop.id}", "data-toggle": "modal",
+            <%= link_to edit_dashboard_shop_path(shop), remote: true,
               "data-shop-id": "#{shop.id}", class: "btn_item btn-edit-shop" do %>
               <div class="btn_icon material-icons">border_color</div>
               <div><%= t "general_info.edit_shop" %></div>
@@ -97,5 +97,4 @@
   </div>
 </div>
 <!-- modal -->
-<%= render "modal_edit_shop", shop: shop %>
 <%= render "modal_manage_joins_domains", shop: shop %>

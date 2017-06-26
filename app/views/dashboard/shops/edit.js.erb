@@ -1,0 +1,44 @@
+<%= provide :title_form, t("dashboard.shops.edit.title") %>
+<%= provide :submit_button, t("shops.new.submit_button") %>
+$('#edit-shop-modal').html('<%= j render "form" %>');
+$('#edit-shop-modal').modal('show');
+$('#shop_openforever').click(function() {
+  if ($(this).is(':checked')) {
+    $('.time_auto_close_shop').slideUp('fast');
+  } else {
+    $('.time_auto_close_shop').slideDown('fast');
+  }
+});
+function load_image_shop(input, klass) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      $('.' + klass).attr('src', e.target.result);
+    }
+  reader.readAsDataURL(input.files[0]);
+  }
+};
+$('.choose-avatar-shop').hover(function() {
+  $('.choose-avatar-shop label').animate({'width': 'show'}, 400);
+}, function() {
+  $('.choose-avatar-shop label').animate({'width': 'hide'}, 400);
+});
+$('.choose-cover-image-shop').hover(function() {
+  $('.choose-cover-image-shop label').animate({'width': 'show'}, 400);
+}, function() {
+  $('.choose-cover-image-shop label').animate({'width': 'hide'}, 400);
+});
+$('.choose-avatar-shop').click(function() {
+  var file_field = $(this).parent().find('.upload-avatar-shop');
+  file_field.click();
+});
+$('.choose-cover-image-shop').click(function() {
+  var file_field = $(this).parent().find('.upload-cover-image-shop');
+  file_field.click();
+});
+$('.upload-avatar-shop').on('change', function() {
+  load_image_shop(this, 'avatar-shop');
+});
+$('.upload-cover-image-shop').on('change', function() {
+  load_image_shop(this, 'cover-image-shop');
+});

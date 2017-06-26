@@ -1,81 +1,91 @@
-<%= form_for [:dashboard, shop], html: {class: "form-shop"} do |f| %>
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="form-group relative">
-        <%= f.label :cover_image, t("owners_shop_cover_image") %>
-        <%= image_tag shop.cover_image.url,
-          class: "cover-image-shop cover-image-#{shop.id}" %>
-        <%= f.file_field :cover_image, accept: Settings.pictures.accepted_files,
-          class: "upload-cover-image-shop hidden-file" %>
-        <%= link_to "javascript:void(0)", class: "choose-cover-image-shop" do %>
-          <i class="material-icons">camera_enhance</i>
-          <label class="margin-bottom-0">
-            <%= t "update_cover_image" %>
-          </label>
-        <% end %>
-      </div>
+<div class="modal-dialog modal-shop">
+  <div class="modal-content">
+    <div class="modal-header modal_header">
+      <button class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title modal_text_header">
+        <%= t "dashboard.shops.edit.title" %>
+      </h4>
     </div>
-    <div class="col-xs-5 padding-right-0">
-      <div class="form-group relative">
-        <%= f.label :avatar, t("owners_shop_avatar") %>
-        <%= image_tag shop.avatar.url,class: "avatar-shop avatar-#{shop.id}" %>
-        <%= f.file_field :avatar, accept: Settings.pictures.accepted_files,
-          class: "upload-avatar-shop hidden-file" %>
-        <%= link_to "javascript:void(0)", class: "choose-avatar-shop" do %>
-          <i class="material-icons">camera_enhance</i>
-          <label class="margin-bottom-0">
-            <%= t "update_image_avatar" %>
-          </label>
-        <% end %>
-      </div>
-    </div>
-    <div class="col-xs-7">
-      <div class="form-group">
-        <%= f.label :name do %>
-          <%= t "request_shop.shop_name" %>
-          <span class="color-red">*</span>
-        <% end %>
-        <%= f.text_field :name, placeholder: t("request_shop.shop_name"),
-          class: "form-control" %>
-      </div>
-      <div class="form-group">
-        <%= f.label :description do %>
-          <%= t "description" %>
-          <span class="color-red">*</span>
-        <% end %>
-        <%= f.text_area :description, placeholder: t("description"),
-          class: "form-control content_note" %>
-      </div>
-      <div class="row">
-        <div class="col-xs-6 form-group margin-bottom-0 line-height-55">
-          <%= f.check_box :openforever, checked_value: true,
-            unchecked_value: false %>
-          <%= f.label :openforever, class: "label-checkbox" do %>
-            <%= t "auto_close_shop" %><span></span>
-          <% end %>
+    <div class="modal-body">
+      <%= form_for [:dashboard, @shop], html: {class: "form-shop"} do |f| %>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group relative">
+              <%= f.label :cover_image, t("owners_shop_cover_image") %>
+              <%= image_tag @shop.cover_image.url, class: "cover-image-shop" %>
+              <%= f.file_field :cover_image, accept: Settings.pictures.accepted_files,
+                class: "upload-cover-image-shop hidden-file" %>
+              <%= link_to "javascript:void(0)", class: "choose-cover-image-shop" do %>
+                <i class="material-icons">camera_enhance</i>
+                <label class="margin-bottom-0">
+                  <%= t "update_cover_image" %>
+                </label>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-xs-5 padding-right-0">
+            <div class="form-group relative">
+              <%= f.label :avatar, t("owners_shop_avatar") %>
+              <%= image_tag @shop.avatar.url,class: "avatar-shop" %>
+              <%= f.file_field :avatar, accept: Settings.pictures.accepted_files,
+                class: "upload-avatar-shop hidden-file" %>
+              <%= link_to "javascript:void(0)", class: "choose-avatar-shop" do %>
+                <i class="material-icons">camera_enhance</i>
+                <label class="margin-bottom-0">
+                  <%= t "update_image_avatar" %>
+                </label>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-xs-7">
+            <div class="form-group">
+              <%= f.label :name do %>
+                <%= t "request_shop.shop_name" %>
+                <span class="color-red">*</span>
+              <% end %>
+              <%= f.text_field :name, placeholder: t("request_shop.shop_name"),
+                class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :description do %>
+                <%= t "description" %>
+                <span class="color-red">*</span>
+              <% end %>
+              <%= f.text_area :description, placeholder: t("description"),
+                class: "form-control content_note" %>
+            </div>
+            <div class="row">
+              <div class="col-xs-6 form-group margin-bottom-0 line-height-55">
+                <%= f.check_box :openforever, class: "display-none" %>
+                <%= f.label :openforever, class: "label-checkbox" do %>
+                  <%= t "auto_close_shop" %><span></span>
+                <% end %>
+              </div>
+              <div class="col-xs-6 form-group time_auto_close_shop center
+                margin-bottom-0 <%= @shop.openforever ? "display-none" : "" %>">
+                <%= f.label :time_auto_close, t("time_auto_close_shop") %>
+                <%= f.time_select :time_auto_close, {},
+                  minute_step: Settings.minute_step, class: "intime-field" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :time_auto_reject, t("time_auto_reject_order") %>
+              <div class="time-field">
+                <%= f.time_select :time_auto_reject, {},
+                  minute_step: Settings.minute_step, class: "intime-field" %>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 button-group-form">
+            <button type="button" class="btn btn-default form-button"
+              data-dismiss="modal">
+              <%= t "cancel" %>
+            </button>
+            <%= f.submit t("shops.new.submit_button"),
+              class: "btn btn_add_to_cart btn-add form-button" %>
+          </div>
         </div>
-        <div class="col-xs-6 form-group time_auto_close_shop center
-          margin-bottom-0 <%= shop.openforever ? "display-none" : "" %>">
-          <%= f.label :time_auto_close, t("time_auto_close_shop") %>
-          <%= f.time_select :time_auto_close, {},
-            minute_step: Settings.minute_step, class: "intime-field" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :time_auto_reject, t("time_auto_reject_order") %>
-        <div class="time-field">
-          <%= f.time_select :time_auto_reject, {},
-            minute_step: Settings.minute_step, class: "intime-field" %>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-12 button-group-form">
-      <button type="button" class="btn btn-default form-button"
-        data-dismiss="modal">
-        <%= t "cancel" %>
-      </button>
-      <%= f.submit t("shops.new.submit_button"),
-        class: "btn btn_add_to_cart btn-add form-button" %>
+      <% end %>
     </div>
   </div>
-<% end %>
+</div>

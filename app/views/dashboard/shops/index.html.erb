@@ -2,8 +2,8 @@
   <h2 class="row_h2">
     <%= t "your_shop" %>
     <div class="btn_view_all_wrapper pull-right">
-      <%= link_to t("create_new_shop"), "#modal-new-shop",
-        "data-toggle": "modal", class: "btn btn_view_all btn-warning" %>
+      <%= link_to t("create_new_shop"), new_dashboard_shop_path, remote: true,
+        class: "btn btn_view_all btn-warning" %>
     </div>
   </h2>
 </div>
@@ -11,4 +11,5 @@
   <%= render @shops %>
 </div>
 <%= paginate @shops %>
-<%= render "modal_new_shop" %>
+<div id="new-shop-modal" class="modal fade"></div>
+<div id="edit-shop-modal" class="modal fade"></div>

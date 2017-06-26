@@ -549,7 +549,7 @@ vi:
         shop: "Cửa hàng"
     shops:
       new:
-        create_shop: "Tạp cửa hàng mới"
+        create_shop: "Tạo cửa hàng mới"
         submit_button: "Lưu"
         title: "Yêu cầu tạo cửa hàng mới"
         shop: "Cửa hàng"

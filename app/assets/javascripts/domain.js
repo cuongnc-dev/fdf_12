@@ -51,9 +51,9 @@ $(document).ready(function() {
   }, function() {
     $(this).find('.domain-item-hidden').slideUp('fast');
   });
-  $.validator.addMethod("valid", function(value, element, regex) {
+  $.validator.addMethod('valid', function(value, element, regex) {
     return this.optional(element) || regex.test(value);
-  }, I18n.t("activerecord.errors.models.domain.attributes.name.without"));
+  }, I18n.t('activerecord.errors.models.domain.attributes.name.without'));
   $('#new_domain').validate({
     errorPlacement: function (error, element) {
       error.insertBefore(element);

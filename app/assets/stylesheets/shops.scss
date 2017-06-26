@@ -805,33 +805,30 @@ input:checked + .slider:before {
     margin-bottom: 0;
     text-align: center;
   }
-  input[type="checkbox"] + label span::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 13px;
+  input[type="checkbox"] + label span {
+    position: relative;
+    display: inline-block;
+    width: 15px;
     height: 15px;
-    line-height: 15px;
-    font-size: 10px;
-  }
-  input[type="checkbox"]:empty {
-    display: none;
-    & + label span {
-      position: relative;
-      display: inline-block;
-      width: 15px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius:  50%;
+    background-color: #eee;
+    margin-left: 5px;
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 13px;
       height: 15px;
-      vertical-align: middle;
-      text-align: center;
-      cursor: pointer;
-      border: 1px solid #ccc;
-      border-radius:  50%;
-      background-color: #eee;
-      margin-left: 5px;
-      &::before {
-        content: "";
-      }
+      line-height: 15px;
+      font-size: 10px;
     }
+  }
+  input[type="checkbox"]:empty + label span::before {
+    content: "";
   }
   input[type="checkbox"]:checked + label span {
     color: #fff;
